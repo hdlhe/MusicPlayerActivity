@@ -4,4 +4,68 @@
     <string name="app_name">MusicPlayerActivity</string>
     <string name="hello_world">Hello world!</string>
 
+     <!-- title of the "current playlist" screen when not in party shuffle mode -->
+    <string name="nowplaying_title">Now playing</string>
+    <!-- title of the "current playlist" screen when in party shuffle mode-->
+    <string name="partyshuffle_title">Party shuffle</string>
+    <!-- Artist screen title -->
+    <string name="artists_title">Artists</string>
+    <!-- Category label on Library screen -->
+    <string name="albums_menu">Albums</string>
+    <!-- Albums screen title -->
+    <string name="albums_title">Albums</string>
+    <!-- Category label on Library screen -->
+    <string name="tracks_menu">Songs</string>
+    <!-- Songs screen title -->
+    <string name="tracks_title">Songs</string>
+    <!-- Category label on Library screen -->
+    <string name="playlists_menu">Playlists</string>
+    <!-- Playlists screen title -->
+    <string name="playlists_title">Playlists</string>
+    <!-- Videos screen title -->
+    <string name="videos_title">Videos</string>
+    <!-- All media screen title -->
+    <string name="all_title">All media</string>
+    <!-- Category label on Library screen -->
+    <string name="browse_menu">Artists</string>
+    <!-- Library screen, menu item -->
+    <string name="search_title">Search</string>
+    <!-- Title of screen when there are no songs, or if the SD card is busy -->
+    <string name="no_tracks_title">No songs</string>
+    <!-- Title of screen when there are no videos, or if the SD card is busy -->
+    <string name="no_videos_title">No videos</string>
+    <!-- Title of screen when there are no playlists, or if the SD card is busy -->
+    <string name="no_playlists_title">No playlists</string>
+    <!-- Playlist context menu item to delete the selected playlist. -->
+    <string name="delete_playlist_menu">Delete</string>
+    <!-- Playlist context menu item to edit the selected playlist -->
+    <string name="edit_playlist_menu">Edit</string>
+    <!-- Playlist context menu item to rename the selected playlist-->
+    <string name="rename_playlist_menu">Rename</string>
+    <!-- Transient popup message shown after deleting a playlist -->
+    <string name="playlist_deleted_message">Playlist deleted.</string>
+    <!-- Transient popup message shown after renaming a playlist -->
+    <string name="playlist_renamed_message">Playlist renamed.</string>
+    <!-- The name of the pseudo-playlist that holds all the recently added files, shown in list view -->
+    <string name="recentlyadded">Recently added</string>
+    <!-- The name of the pseudo-playlist that holds all the recently added files, shown in title bar of songs list -->
+    <string name="recentlyadded_title">Recently added</string>
+    <!-- The name of the pseudo-playlist that holds all the podcasts, shown in list view -->
+    <string name="podcasts_listitem">Podcasts</string>
+    <!-- The name of the pseudo-playlist that holds all the podcasts, shown in title bar of songs list -->
+    <string name="podcasts_title">Podcasts</string>
+    <!-- Title of screen when no sd card is present -->
+    <string name="sdcard_missing_title">No SD card</string>
+    <!-- Title of screen when no sd card is present -->
+    <string name="sdcard_missing_title_nosdcard">No USB storage</string>
+    <!-- label underneath icon used to indicate that no sd card is present -->
+    <string name="sdcard_missing_message">Your phone doesn\'t have an SD card inserted.</string>
+    <!-- label underneath icon used to indicate that no sd card is present -->
+    <string name="sdcard_missing_message_nosdcard">Your phone doesn\'t have USB storage.</string>
+    <!-- label underneath icon used to indicate that the sd card is present, but currently unavailable -->
+    <string name="sdcard_busy_title">SD card unavailable</string>
+    <!-- label underneath icon used to indicate that the sd card is present, but currently unavailable -->
+    <string name="sdcard_busy_title_nosdcard">USB storage unavailable</string>
+    <!-- label underneath icon used to indicate sd card is mounted to your computer via USB -->
+    <string name="sdcard_busy_message">Your SD card is busy.</string>
 </resources>
