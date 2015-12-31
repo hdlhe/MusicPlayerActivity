@@ -4,7 +4,7 @@
     <string name="app_name">MusicPlayerActivity</string>
     <string name="hello_world">Hello world!</string>
 
-     <!-- title of the "current playlist" screen when not in party shuffle mode -->
+    <!-- title of the "current playlist" screen when not in party shuffle mode -->
     <string name="nowplaying_title">Now playing</string>
     <!-- title of the "current playlist" screen when in party shuffle mode-->
     <string name="partyshuffle_title">Party shuffle</string>
@@ -68,4 +68,102 @@
     <string name="sdcard_busy_title_nosdcard">USB storage unavailable</string>
     <!-- label underneath icon used to indicate sd card is mounted to your computer via USB -->
     <string name="sdcard_busy_message">Your SD card is busy.</string>
+    <!-- label underneath icon used to indicate sd card is mounted to your computer via USB -->
+    <string name="sdcard_busy_message_nosdcard">Your USB storage is busy.</string>
+    <!-- Title of screen when there was an error accessing the sd card -->
+    <string name="sdcard_error_title">SD card error</string>
+    <!-- Title of screen when there was an error accessing the sd card -->
+    <string name="sdcard_error_title_nosdcard">USB storage error</string>
+    <!-- label underneath icon used to indicate there was an error accessing the sd card -->
+    <string name="sdcard_error_message">An error was encountered on your SD card.</string>
+    <!-- label underneath icon used to indicate there was an error accessing the sd card -->
+    <string name="sdcard_error_message_nosdcard">An error was encountered on your USB storage.</string>
+    <!-- Default name of artist that doesn't have a name in the metadata -->
+    <string name="unknown_artist_name">Unknown artist</string>
+    <!-- Default name of album that doesn't have a name in the metadata -->
+    <string name="unknown_album_name">Unknown album</string>
+    <!-- Toast after turning shuffle on -->
+    <string name="shuffle_on_notif">Shuffle is on.</string>
+    <!-- Toast after turning shuffle off -->
+    <string name="shuffle_off_notif">Shuffle is off.</string>
+    <!-- Toast after turning repeat off -->
+    <string name="repeat_off_notif">Repeat is off.</string>
+    <!-- Toast after turning single repeat on -->
+    <string name="repeat_current_notif">Repeating current song.</string>
+    <!-- Toast after turning repeat all on -->
+    <string name="repeat_all_notif">Repeating all songs.</string>
+    <!-- Individual song context menu item -->
+    <string name="ringtone_menu">Use as phone ringtone</string>
+    <!-- Menu item -->
+    <string name="ringtone_menu_short">Use as ringtone</string>
+    <string name="title_activity_artist_album_browser">ArtistAlbumBrowserActivity</string>
+
+     <!-- Button name in time span picker -->
+    <string name="weekpicker_set">Done</string>
+    <!-- Title of time span picker -->
+    <string name="weekpicker_title">Set time</string>
+    <!-- Do not translate. Background color for currently dragged item in playlist edit mode. -->
+    <color name="dragndrop_background">#e0103010</color>
+    <!-- Do not translate. Background color for albums in the artists list view. -->
+    <color name="expanding_child_background">#ff404040</color>
+
+    <!-- menu item to save the current list as a new playlist -->
+    <string name="save_as_playlist">Save as playlist</string>
+    <!-- menu item to clear the current playlist -->
+    <string name="clear_playlist">Clear playlist</string>
+
+    <!-- Activity label. This might show up in the activity-picker -->
+    <string name="musicbrowserlabel">Music1</string>
+    <!-- Activity label. This might show up in the activity-picker -->
+    <string name="musicshortcutlabel">Music playlist</string>
+    <!-- Activity label. This might show up in the activity-picker -->
+    <string name="mediaplaybacklabel">Music</string>
+    <!-- Activity label. This might show up in the activity-picker -->
+    <string name="videobrowserlabel">Videos</string>
+    <!-- Activity label. This might show up in the activity-picker -->
+    <string name="mediapickerlabel">Music</string>
+
+    <!-- Shown as a transient message whenever a file fails to play -->
+    <string name="playback_failed">The player doesn\'t support this type of audio file.</string>
+
+    <!-- Text for the "cancel" button in the "delete" and "create playlist" confirmation dialogs -->
+    <string name="cancel">Cancel</string>
+
+    <!-- context menu item to remove the selected item from the playlist -->
+    <string name="remove_from_playlist">Remove from playlist</string>
+
+     <!-- Shown in the title bar while the list of artists is being retrieved in the background -->
+    <string name="working_artists">Artists\u2026</string>
+    <!-- Shown in the title bar while the list of albums is being retrieved in the background -->
+    <string name="working_albums">Albums\u2026</string>
+    <!-- Shown in the title bar while the list of songs is being retrieved in the background -->
+    <string name="working_songs">Songs\u2026</string>
+    <!-- Shown in the title bar while the list of playlists is being retrieved in the background -->
+    <string name="working_playlists">Playlists\u2026</string>
+
+    <!-- Shown in the music picker while loading the music database. -->
+    <string name="loading">Loading\u2026</string>
+    <!-- Menu in music picker to sort the list by track/song name. -->
+    <string name="sort_by_track">Tracks</string>
+    <!-- Menu in music picker to sort the list by album name. -->
+    <string name="sort_by_album">Albums</string>
+    <!-- Menu in music picker to sort the list by artist name. -->
+    <string name="sort_by_artist">Artists</string>
+    <!--  Title of the music picker activity. -->
+    <string name="music_picker_title">Choose music track</string>
+
+    <!-- The string used to describe Music as a searchable item within system search settings. -->
+    <string name="search_settings_description">Artists, albums, and tracks</string>
+
+    <!-- Shown in the search box as a hint -->
+    <string name="search_hint">Search Music</string>
+
+    <!--The fast scroll thumb will show one character from this string depending on the position in the list -->
+    <string name="fast_scroll_alphabet">\u0020ABCDEFGHIJKLMNOPQRSTUVWXYZ</string>
+
+    <!-- Text shown on widget when first loaded -->
+    <string name="widget_initial_text">Touch to choose music.</string>
+
+    <!-- Menu text for the item controlling the audio effects panel [CHAR LIMIT=15] -->
+    <string name="effectspanel">Sound effects</string>
 </resources>
