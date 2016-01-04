@@ -40,7 +40,7 @@ public class ArtistAlbumBrowserActivity extends ExpandableListActivity {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-		// mToken = MusicUtils.bindToService(this, this);
+//		mToken = MusicUtils.bindToService(this, this);
 
 		setContentView(R.layout.media_picker_activity_expanding);
 		MusicUtils.updateButtonBar(this, R.id.artisttab);
@@ -107,18 +107,24 @@ public class ArtistAlbumBrowserActivity extends ExpandableListActivity {
 	static class ArtistAlbumListAdapter extends SimpleCursorTreeAdapter {
 
 		private final Drawable mNowPlayingOverlay;
-		private final BitmapDrawable mDefaultAlbumIcon;
-		private int mGroupArtistIdIdx;
-		private int mGroupArtistIdx;
-		private int mGroupAlbumIdx;
-		private int mGroupSongIdx;
-		private final Context mContext;
-		private final Resources mResources;
-		private final String mAlbumSongSeparator;
-		private final String mUnknownAlbum;
-		private final String mUnknownArtist;
-		private ArtistAlbumBrowserActivity mActivity;
-		private AsyncQueryHandler mQueryHandler;
+        private final BitmapDrawable mDefaultAlbumIcon;
+        private int mGroupArtistIdIdx;
+        private int mGroupArtistIdx;
+        private int mGroupAlbumIdx;
+        private int mGroupSongIdx;
+        private final Context mContext;
+        private final Resources mResources;
+        private final String mAlbumSongSeparator;
+        private final String mUnknownAlbum;
+        private final String mUnknownArtist;
+        private final StringBuilder mBuffer = new StringBuilder();
+        private final Object[] mFormatArgs = new Object[1];
+        private final Object[] mFormatArgs3 = new Object[3];
+//        private MusicAlphabetIndexer mIndexer;
+        private ArtistAlbumBrowserActivity mActivity;
+        private AsyncQueryHandler mQueryHandler;
+        private String mConstraint = null;
+        private boolean mConstraintIsValid = false;
 
 		static class ViewHolder {
 			TextView line1;
@@ -254,10 +260,10 @@ public class ArtistAlbumBrowserActivity extends ExpandableListActivity {
 			int numalbums = cursor.getInt(mGroupAlbumIdx);
 			int numsongs = cursor.getInt(mGroupSongIdx);
 
-			// String songs_albums = MusicUtils.makeAlbumsLabel(context,
-			// numalbums, numsongs, unknown);
-			//
-			// vh.line2.setText(songs_albums);
+			 String songs_albums = MusicUtils.makeAlbumsLabel(context,
+			 numalbums, numsongs, unknown);
+			
+			 vh.line2.setText(songs_albums);
 			//
 			// long currentartistid = MusicUtils.getCurrentArtistId();
 			// long artistid = cursor.getLong(mGroupArtistIdIdx);
@@ -268,6 +274,7 @@ public class ArtistAlbumBrowserActivity extends ExpandableListActivity {
 			// }
 		}
 
+		@SuppressWarnings("deprecation")
 		@Override
 		public void bindChildView(View view, Context context, Cursor cursor,
 				boolean islast) {
@@ -295,56 +302,56 @@ public class ArtistAlbumBrowserActivity extends ExpandableListActivity {
 					.getInt(cursor
 							.getColumnIndexOrThrow(MediaStore.Audio.Albums.NUMBER_OF_SONGS_FOR_ARTIST));
 
-			// final StringBuilder builder = mBuffer;
-			// builder.delete(0, builder.length());
-			// if (unknown) {
-			// numsongs = numartistsongs;
-			// }
-			//
-			// if (numsongs == 1) {
-			// builder.append(context.getString(R.string.onesong));
-			// } else {
-			// if (numsongs == numartistsongs) {
-			// final Object[] args = mFormatArgs;
-			// args[0] = numsongs;
-			// builder.append(mResources.getQuantityString(
-			// R.plurals.Nsongs, numsongs, args));
-			// } else {
-			// final Object[] args = mFormatArgs3;
-			// args[0] = numsongs;
-			// args[1] = numartistsongs;
-			// args[2] = cursor
-			// .getString(cursor
-			// .getColumnIndexOrThrow(MediaStore.Audio.Artists.ARTIST));
-			// builder.append(mResources.getQuantityString(
-			// R.plurals.Nsongscomp, numsongs, args));
-			// }
-			// }
-			// vh.line2.setText(builder.toString());
-			//
-			// ImageView iv = vh.icon;
-			// // We don't actually need the path to the thumbnail file,
-			// // we just use it to see if there is album art or not
-			// String art = cursor.getString(cursor
-			// .getColumnIndexOrThrow(MediaStore.Audio.Albums.ALBUM_ART));
-			// if (unknown || art == null || art.length() == 0) {
-			// iv.setBackgroundDrawable(mDefaultAlbumIcon);
-			// iv.setImageDrawable(null);
-			// } else {
-			// long artIndex = cursor.getLong(0);
-			// Drawable d = MusicUtils.getCachedArtwork(context, artIndex,
-			// mDefaultAlbumIcon);
-			// iv.setImageDrawable(d);
-			// }
-			//
-			// long currentalbumid = MusicUtils.getCurrentAlbumId();
-			// long aid = cursor.getLong(0);
-			// iv = vh.play_indicator;
-			// if (currentalbumid == aid) {
-			// iv.setImageDrawable(mNowPlayingOverlay);
-			// } else {
-			// iv.setImageDrawable(null);
-			// }
+			final StringBuilder builder = mBuffer;
+			builder.delete(0, builder.length());
+			if (unknown) {
+				numsongs = numartistsongs;
+			}
+
+			if (numsongs == 1) {
+				builder.append(context.getString(R.string.onesong));
+			} else {
+				if (numsongs == numartistsongs) {
+					final Object[] args = mFormatArgs;
+					args[0] = numsongs;
+					builder.append(mResources.getQuantityString(
+							R.plurals.Nsongs, numsongs, args));
+				} else {
+					final Object[] args = mFormatArgs3;
+					args[0] = numsongs;
+					args[1] = numartistsongs;
+					args[2] = cursor
+							.getString(cursor
+									.getColumnIndexOrThrow(MediaStore.Audio.Artists.ARTIST));
+					builder.append(mResources.getQuantityString(
+							R.plurals.Nsongscomp, numsongs, args));
+				}
+			}
+			vh.line2.setText(builder.toString());
+
+			ImageView iv = vh.icon;
+			// We don't actually need the path to the thumbnail file,
+			// we just use it to see if there is album art or not
+			String art = cursor.getString(cursor
+					.getColumnIndexOrThrow(MediaStore.Audio.Albums.ALBUM_ART));
+			if (unknown || art == null || art.length() == 0) {
+				iv.setBackgroundDrawable(mDefaultAlbumIcon);
+				iv.setImageDrawable(null);
+			} else {
+				long artIndex = cursor.getLong(0);
+				Drawable d = MusicUtils.getCachedArtwork(context, artIndex,
+						mDefaultAlbumIcon);
+				iv.setImageDrawable(d);
+			}
+
+//			long currentalbumid = MusicUtils.getCurrentAlbumId();
+//			long aid = cursor.getLong(0);
+//			iv = vh.play_indicator;
+//			if (currentalbumid == aid) {
+//				iv.setImageDrawable(mNowPlayingOverlay);
+//			} else {
+//				iv.setImageDrawable(null);
+//			}
 		}
 
 		@Override
