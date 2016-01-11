@@ -4,6 +4,7 @@ import android.app.ExpandableListActivity;
 import android.content.AsyncQueryHandler;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.CursorWrapper;
@@ -17,6 +18,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.SimpleCursorTreeAdapter;
 import android.widget.TextView;
@@ -27,6 +29,11 @@ public class ArtistAlbumBrowserActivity extends ExpandableListActivity {
 	private static final String TAG = "ArtistAlbumBrowserActivity";
 	private static final boolean DEBUG = true;
 
+    private String mCurrentArtistId;
+    private String mCurrentArtistName;
+    private String mCurrentAlbumId;
+    private String mCurrentAlbumName;
+    private String mCurrentArtistNameForAlbum;
 	private ArtistAlbumListAdapter mAdapter;
 	private ServiceToken mToken;
 
@@ -103,6 +110,31 @@ public class ArtistAlbumBrowserActivity extends ExpandableListActivity {
 		// MusicUtils.updateButtonBar(this, R.id.artisttab);
 		// setTitle();
 	}
+	
+    private void setTitle() {
+        setTitle(R.string.artists_title);
+    }
+    
+    @Override
+    public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+
+        mCurrentAlbumId = Long.valueOf(id).toString();
+        
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setDataAndType(Uri.EMPTY, "vnd.android.cursor.dir/liu/track");
+        intent.putExtra("album", mCurrentAlbumId);
+        Cursor c = (Cursor) getExpandableListAdapter().getChild(groupPosition, childPosition);
+        String album = c.getString(c.getColumnIndex(MediaStore.Audio.Albums.ALBUM));
+        if (album == null || album.equals(MediaStore.UNKNOWN_STRING)) {
+            // unknown album, so we should include the artist ID to limit the songs to songs only by that artist 
+            mArtistCursor.moveToPosition(groupPosition);
+            mCurrentArtistId = mArtistCursor.getString(mArtistCursor.getColumnIndex(MediaStore.Audio.Artists._ID));
+            intent.putExtra("artist", mCurrentArtistId);
+        }
+        startActivity(intent);
+        return true;
+    }
+
 
 	static class ArtistAlbumListAdapter extends SimpleCursorTreeAdapter {
 
