@@ -34,14 +34,18 @@
                 <data android:mimeType="vnd.android.cursor.dir/liu/artistalbum"/>
             </intent-filter>
         </activity>
-        <activity android:name=".TrackBrowserActivity" android:exported="false" >
+        <activity 
+            android:name=".TrackBrowserActivity" android:exported="false" 
+            >
             <intent-filter>
                 <action android:name="android.intent.action.EDIT" />
                 <action android:name="android.intent.action.PICK" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <data android:mimeType="vnd.android.cursor.dir/liu/track"/>
             </intent-filter>
-        </activity>        
+        </activity>     
+        <service android:name="com.liu.musicplayeractivity.MediaPlaybackService"
+            android:exported="false" />   
     </application>
 
 </manifest>

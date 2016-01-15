@@ -24,6 +24,21 @@
         <item quantity="other"><xliff:g id="count">%d</xliff:g> albums</item>
     </plurals>
 
+    <!--
+    This string is used as the format string in a String.format call,
+    and 5 additional arguments are available for printing:
+    1 - hours
+    2 - minutes
+    3 - minutes%60
+    4 - seconds
+    5 - second%60
+    -->
+    <skip/>
+    <!-- Do not translate. Duration format for duration < 1 hour -->
+    <string translatable="false" name="durationformatshort"><xliff:g id="format">%2$d:%5$02d</xliff:g></string>
+    <!-- Do not translate. Duration format for duration >= 1 hour -->
+    <string translatable="false" name="durationformatlong"><xliff:g id="format">%1$d:%3$02d:%5$02d</xliff:g></string>
+    
     <!-- title of the "current playlist" screen when not in party shuffle mode -->
     <string name="nowplaying_title">Now playing</string>
     <!-- title of the "current playlist" screen when in party shuffle mode-->

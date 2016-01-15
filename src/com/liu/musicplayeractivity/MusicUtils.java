@@ -24,6 +24,10 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.ColorFilter;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
+import android.graphics.Matrix;
+import android.graphics.Paint;
 import android.graphics.PixelFormat;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -322,9 +326,10 @@ public class MusicUtils {
             }
             return null;
         }
-
+//content://media/external/audio/albums/12
         ContentResolver res = context.getContentResolver();
         Uri uri = ContentUris.withAppendedId(sArtworkUri, album_id);
+        //uri = Uri.parse("content://media/external/audio/albums" + "/" + album_id + "/album_art");
         if (uri != null) {
             InputStream in = null;
             try {
@@ -372,6 +377,7 @@ public class MusicUtils {
         try {
             if (albumid < 0) {
                 Uri uri = Uri.parse("content://media/external/audio/media/" + songid + "/albumart");
+            	//Uri uri = MediaStore.Audio.Artists.Albums.getContentUri("external", songid);
                 ParcelFileDescriptor pfd = context.getContentResolver().openFileDescriptor(uri, "r");
                 if (pfd != null) {
                     FileDescriptor fd = pfd.getFileDescriptor();
@@ -409,7 +415,28 @@ public class MusicUtils {
     private static StringBuilder sFormatBuilder = new StringBuilder();
     private static Formatter sFormatter = new Formatter(sFormatBuilder, Locale.getDefault());
     private static final Object[] sTimeArgs = new Object[5];
-	
+    
+    public static String makeTimeString(Context context, long secs) {
+		String durationformat = context
+				.getString(secs < 3600 ? R.string.durationformatshort
+						: R.string.durationformatlong);
+
+		/*
+		 * Provide multiple arguments so the format can be changed easily by
+		 * modifying the xml.
+		 */
+		sFormatBuilder.setLength(0);
+
+		final Object[] timeArgs = sTimeArgs;
+		timeArgs[0] = secs / 3600;
+		timeArgs[1] = secs / 60;
+		timeArgs[2] = (secs / 60) % 60;
+		timeArgs[3] = secs;
+		timeArgs[4] = secs % 60;
+
+		return sFormatter.format(durationformat, timeArgs).toString();
+	}
+    
 	static int getIntPref(Context context, String name, int def) {
 		SharedPreferences prefs = context.getSharedPreferences(context.getPackageName(), Context.MODE_PRIVATE);
 		return prefs.getInt(name, def);
@@ -513,5 +540,45 @@ public class MusicUtils {
 		a.startActivity(intent);
 		a.finish();
 		a.overridePendingTransition(0, 0);
+	}
+	
+	@SuppressWarnings("deprecation")
+	static void setBackground(View v, Bitmap bm) {
+
+		if (bm == null) {
+			v.setBackgroundResource(0);
+			return;
+		}
+
+		int vwidth = v.getWidth();
+		int vheight = v.getHeight();
+		int bwidth = bm.getWidth();
+		int bheight = bm.getHeight();
+		float scalex = (float) vwidth / bwidth;
+		float scaley = (float) vheight / bheight;
+		float scale = Math.max(scalex, scaley) * 1.3f;
+
+		Bitmap.Config config = Bitmap.Config.ARGB_8888;
+		Bitmap bg = Bitmap.createBitmap(vwidth, vheight, config);
+		Canvas c = new Canvas(bg);
+		Paint paint = new Paint();
+		paint.setAntiAlias(true);
+		paint.setFilterBitmap(true);
+		ColorMatrix greymatrix = new ColorMatrix();
+		greymatrix.setSaturation(0);
+		ColorMatrix darkmatrix = new ColorMatrix();
+		darkmatrix.setScale(.3f, .3f, .3f, 1.0f);
+		greymatrix.postConcat(darkmatrix);
+		ColorFilter filter = new ColorMatrixColorFilter(greymatrix);
+		paint.setColorFilter(filter);
+		Matrix matrix = new Matrix();
+		matrix.setTranslate(-bwidth / 2, -bheight / 2); // move bitmap center to
+														// origin
+		matrix.postRotate(10);
+		matrix.postScale(scale, scale);
+		matrix.postTranslate(vwidth / 2, vheight / 2); // Move bitmap center to
+														// view center
+		c.drawBitmap(bm, matrix, paint);
+		v.setBackgroundDrawable(new BitmapDrawable(bg));
 	}
 }
